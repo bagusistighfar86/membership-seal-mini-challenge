@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   Box, Container, Flex, HStack, Image, VStack, chakra, FormControl, FormLabel, Input, Button, Text, Heading, Link, InputRightElement, InputGroup, useToast,
@@ -10,10 +10,17 @@ import LogoKM from 'assets/logo-km.png';
 import WallpaperLogin from 'assets/wallpaper-login.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { getCookie } from 'utils/setCookies';
 
 function Register() {
   const navigate = useNavigate();
   const toast = useToast();
+
+  useEffect(() => {
+    const auth = { accessToken: getCookie('accessToken') };
+
+    if (auth.accessToken) navigate('/');
+  }, []);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);

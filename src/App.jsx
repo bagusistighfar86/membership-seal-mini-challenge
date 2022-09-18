@@ -8,6 +8,7 @@ import CreateMembership from 'views/MainPage/CreateMembership';
 import ShowMembership from 'views/MainPage/ShowMembership';
 import EditMemberbershipData from 'views/MainPage/EditMembershipData';
 import ShowDetailMembership from 'views/MainPage/ShowDetailMembership';
+import PrivateRoutes from 'utils/privateRoutes';
 
 function App() {
   return (
@@ -15,14 +16,12 @@ function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="create-membership" element={<CreateMembership />} />
-        <Route path="membership" element={<ShowMembership />} />
-        <Route path="/membership/edit/:id" element={<EditMemberbershipData />} />
-        <Route path="/membership/detail/:id" element={<ShowDetailMembership />} />
-        {/* <Route element={<PrivateRoutes />}>
-          <Route element={<Token />} path="token" />
-          <Route path="/" element={<Dashboard />} />
-        </Route> */}
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<ShowMembership />} />
+          <Route path="create-membership" element={<CreateMembership />} />
+          <Route path="/membership/edit/:id" element={<EditMemberbershipData />} />
+          <Route path="/membership/detail/:id" element={<ShowDetailMembership />} />
+        </Route>
       </Routes>
     </ChakraProvider>
   );

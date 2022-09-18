@@ -21,7 +21,7 @@ function Sidebar() {
     },
     {
       label: 'Membership',
-      path: '/membership',
+      path: '/',
       icon: faUser,
     },
   ];

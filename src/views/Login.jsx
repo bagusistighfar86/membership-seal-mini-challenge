@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box, Button, Container, Flex, FormControl, FormLabel, Image, Input, Text, VStack, chakra, HStack, Heading, Link, InputGroup, InputRightElement, useToast,
 } from '@chakra-ui/react';
@@ -10,7 +10,7 @@ import WallpaperLogin from 'assets/wallpaper-login.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { setCookie } from 'utils/setCookies';
+import { getCookie, setCookie } from 'utils/setCookies';
 
 function Login() {
   const navigate = useNavigate();
@@ -25,6 +25,12 @@ function Login() {
   });
 
   const { errors, validateForm, onBlurField } = useLoginFormValidator(form);
+
+  useEffect(() => {
+    const auth = { accessToken: getCookie('accessToken') };
+
+    if (auth.accessToken) navigate('/');
+  }, []);
 
   const onUpdateField = (e) => {
     const field = e.target.name;
@@ -63,7 +69,7 @@ function Login() {
         console.log(res);
         setCookie('accessToken', res.data.data.access_token, 30);
         resetFormState();
-        navigate('/create-membership');
+        navigate('/');
         toast({
           title: 'Login Successed',
           position: 'top',

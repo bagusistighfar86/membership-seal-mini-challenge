@@ -35,7 +35,7 @@ function Navbar() {
     },
     {
       label: 'Membership',
-      path: '/membership',
+      path: '/',
       icon: faUser,
     },
   ];
@@ -44,7 +44,7 @@ function Navbar() {
     if (location.pathname.includes('/create-membership')) {
       setJudul('Create Membership');
       setActive('Home');
-    } else if (location.pathname.includes('/membership')) {
+    } else if (location.pathname.includes('/')) {
       setJudul('Membership');
       setActive('Portfolio');
     }
@@ -75,7 +75,16 @@ function Navbar() {
         px={5}
         alignItems="center"
       >
-        <Button me={3} ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        <Button
+          display={{
+            base: 'flex',
+            md: 'none',
+          }}
+          me={3}
+          ref={btnRef}
+          colorScheme="teal"
+          onClick={onOpen}
+        >
           <FontAwesomeIcon icon={faBars} />
         </Button>
         <Drawer

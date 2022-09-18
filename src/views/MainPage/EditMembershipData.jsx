@@ -164,8 +164,8 @@ function EditMembershipData() {
           <Box minH="100vh" pt={32} px={5} left="300px">
             <Link
               as={ReachLink}
-              to="/membership"
-              onClick={() => navigate('/membership')}
+              to="/"
+              onClick={() => navigate('/')}
               display="flex"
               alignItems="center"
               fontSize="xl"
