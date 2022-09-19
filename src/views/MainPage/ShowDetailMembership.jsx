@@ -47,8 +47,6 @@ function ShowDetailMembership() {
         setForm(nextFormState);
         setIsLoading(false);
       }
-    }).catch((err) => {
-      console.log(err);
     });
   };
 

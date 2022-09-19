@@ -19,10 +19,9 @@ function CreateMembership() {
     gender: 1,
   });
 
-  const { errors, validateForm, onBlurField } = useCreateMembershipFormValidator(form);
+  const { ors, validateForm, onBlurField } = useCreateMembershipFormValidator(form);
 
   const onUpdateField = (e) => {
-    console.log(e.target.value);
     const field = e.target.name;
     const { type } = e.target;
     const nextFormState = {
@@ -31,10 +30,10 @@ function CreateMembership() {
     };
     setForm(nextFormState);
 
-    if (errors[field].dirty) {
+    if (ors[field].dirty) {
       validateForm({
         form: nextFormState,
-        errors,
+        ors,
         field,
       });
     }
@@ -70,7 +69,7 @@ function CreateMembership() {
       },
     }).then((res) => {
       if (res) {
-        // console.log(res);
+        // (res);
         resetFormState();
         toast({
           title: 'Membership successed to create',
@@ -79,12 +78,11 @@ function CreateMembership() {
           isClosable: true,
         });
       }
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
       toast({
         title: 'Membership failed to create',
         position: 'top',
-        status: 'error',
+        status: 'or',
         isClosable: true,
       });
     });
@@ -92,7 +90,7 @@ function CreateMembership() {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    const { isValid } = validateForm({ form, errors, forceTouchErrors: true });
+    const { isValid } = validateForm({ form, ors, forceTouchors: true });
     if (!isValid) return;
     fetchCreate();
   };
@@ -118,11 +116,11 @@ function CreateMembership() {
                 onChange={onUpdateField}
                 value={form.name}
                 border="none"
-                borderRadius={0}
+                bordadius={0}
                 borderBottom="2px solid black"
               />
-              {errors.name.dirty && errors.name.error ? (
-                <Text color="red">{errors.name.message}</Text>
+              {ors.name.dirty && ors.name.or ? (
+                <Text color="red">{ors.name.message}</Text>
               ) : null}
             </FormControl>
             <FormControl mb={5}>
@@ -134,11 +132,11 @@ function CreateMembership() {
                 onChange={onUpdateField}
                 value={form.address}
                 border="none"
-                borderRadius={0}
+                bordadius={0}
                 borderBottom="2px solid black"
               />
-              {errors.address.dirty && errors.address.error ? (
-                <Text color="red">{errors.address.message}</Text>
+              {ors.address.dirty && ors.address.or ? (
+                <Text color="red">{ors.address.message}</Text>
               ) : null}
             </FormControl>
             <FormControl mb={5}>
@@ -150,11 +148,11 @@ function CreateMembership() {
                 onChange={onUpdateField}
                 value={form.handphone}
                 border="none"
-                borderRadius={0}
+                bordadius={0}
                 borderBottom="2px solid black"
               />
-              {errors.handphone.dirty && errors.handphone.error ? (
-                <Text color="red">{errors.handphone.message}</Text>
+              {ors.handphone.dirty && ors.handphone.or ? (
+                <Text color="red">{ors.handphone.message}</Text>
               ) : null}
             </FormControl>
             <Checkbox
@@ -188,7 +186,7 @@ function CreateMembership() {
                 onChange={onUpdateField}
                 value={form.age}
                 border="none"
-                borderRadius={0}
+                bordadius={0}
                 borderBottom="2px solid black"
               />
             </FormControl>

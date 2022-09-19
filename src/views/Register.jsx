@@ -35,7 +35,7 @@ function Register() {
     confirmPassword: '',
   });
 
-  const { errors, validateForm, onBlurField } = useRegisterFormValidator(form);
+  const { ors, validateForm, onBlurField } = useRegisterFormValidator(form);
 
   const onUpdateField = (e) => {
     const field = e.target.name;
@@ -44,10 +44,10 @@ function Register() {
       [field]: e.target.value,
     };
     setForm(nextFormState);
-    if (errors[field].dirty) {
+    if (ors[field].dirty) {
       validateForm({
         form: nextFormState,
-        errors,
+        ors,
         field,
       });
     }
@@ -73,12 +73,11 @@ function Register() {
           isClosable: true,
         });
       }
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
       toast({
         title: 'Data failed to register',
         position: 'top',
-        status: 'error',
+        status: 'or',
         isClosable: true,
       });
     });
@@ -86,7 +85,7 @@ function Register() {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    const { isValid } = validateForm({ form, errors, forceTouchErrors: true });
+    const { isValid } = validateForm({ form, ors, forceTouchors: true });
     if (!isValid) return;
     fetchRegister();
   };
@@ -136,11 +135,11 @@ function Register() {
                     onChange={onUpdateField}
                     value={form.name}
                     border="none"
-                    borderRadius={0}
+                    bordadius={0}
                     borderBottom="2px solid black"
                   />
-                  {errors.name.dirty && errors.name.error ? (
-                    <Text color="red">{errors.name.message}</Text>
+                  {ors.name.dirty && ors.name.or ? (
+                    <Text color="red">{ors.name.message}</Text>
                   ) : null}
                 </FormControl>
                 <FormControl mb={5}>
@@ -152,11 +151,11 @@ function Register() {
                     onChange={onUpdateField}
                     value={form.email}
                     border="none"
-                    borderRadius={0}
+                    bordadius={0}
                     borderBottom="2px solid black"
                   />
-                  {errors.email.dirty && errors.email.error ? (
-                    <Text color="red">{errors.email.message}</Text>
+                  {ors.email.dirty && ors.email.or ? (
+                    <Text color="red">{ors.email.message}</Text>
                   ) : null}
                 </FormControl>
                 <FormControl mb={5}>
@@ -169,7 +168,7 @@ function Register() {
                       onChange={onUpdateField}
                       onBlur={onBlurField}
                       border="none"
-                      borderRadius={0}
+                      bordadius={0}
                       borderBottom="2px solid black"
                     />
                     <InputRightElement width="4.5rem">
@@ -178,8 +177,8 @@ function Register() {
                       </Button>
                     </InputRightElement>
                   </InputGroup>
-                  {errors.password.dirty && errors.password.error ? (
-                    <Text color="red">{errors.password.message}</Text>
+                  {ors.password.dirty && ors.password.or ? (
+                    <Text color="red">{ors.password.message}</Text>
                   ) : null}
                 </FormControl>
                 <FormControl mb={10}>
@@ -192,7 +191,7 @@ function Register() {
                       onChange={onUpdateField}
                       onBlur={onBlurField}
                       border="none"
-                      borderRadius={0}
+                      bordadius={0}
                       borderBottom="2px solid black"
                     />
                     <InputRightElement width="4.5rem">
@@ -201,8 +200,8 @@ function Register() {
                       </Button>
                     </InputRightElement>
                   </InputGroup>
-                  {errors.confirmPassword.dirty && errors.confirmPassword.error ? (
-                    <Text color="red">{errors.confirmPassword.message}</Text>
+                  {ors.confirmPassword.dirty && ors.confirmPassword.or ? (
+                    <Text color="red">{ors.confirmPassword.message}</Text>
                   ) : null}
                 </FormControl>
                 <Text mb={10} textAlign="center">

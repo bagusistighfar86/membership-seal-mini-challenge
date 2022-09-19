@@ -64,7 +64,7 @@ function Sidebar() {
             px={5}
             display="flex"
             alignItems="center"
-            borderRadius={10}
+            bordadius={10}
             fontSize="lg"
             fontWeight="400"
             textDecor="none"

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Box, HStack, Link, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Button, Text, useToast, Spinner, Center,
+  Box, HStack, Link, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Button, Text, Spinner, Center,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faPenToSquare, faTrash, faArrowLeft, faArrowRight,
+  faPenToSquare, faArrowLeft, faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link as ReachLink, useNavigate } from 'react-router-dom';
 import { getCookie } from 'utils/setCookies';
+import DeleteMembershipButton from 'components/Button/DeleteMembershipButton';
 import Layout from './Layout';
 
 function ShowMembership() {
   const navigate = useNavigate();
-  const toast = useToast();
-
-  let accessToken = '';
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +25,7 @@ function ShowMembership() {
   const [urlPagination, setUrlPagination] = useState('https://challenge.madjou.com/api/memberships');
 
   const getMembership = async () => {
-    accessToken = getCookie('accessToken');
+    const accessToken = getCookie('accessToken');
     await axios({
       method: 'get',
       url: urlPagination,
@@ -42,16 +40,15 @@ function ShowMembership() {
           nextURL: res.data.data.next_page_url,
         };
         setNavigation(nav);
-        // console.log(res.data.data);
+        // (res.data.data);
         setData(res.data.data.data);
         setIsLoading(false);
       }
-    }).catch((err) => {
-      console.log(err);
     });
   };
 
   const updateNav = async () => {
+    const accessToken = getCookie('accessToken');
     await axios({
       method: 'get',
       url: urlPagination,
@@ -67,34 +64,6 @@ function ShowMembership() {
         };
         setNavigation(nav);
       }
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
-  const deleteMembership = async (taskId) => {
-    accessToken = getCookie('accessToken');
-    await axios({
-      method: 'delete',
-      url: `api/memberships/${taskId}`,
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    }).then((res) => {
-      if (res) {
-        const newData = data.filter((item) => item.id !== taskId);
-        // console.log(data);
-        setData(newData);
-        toast({
-          title: 'Data deleted successfully',
-          position: 'bottom-left',
-          status: 'success',
-          isClosable: true,
-        });
-        updateNav();
-      }
-    }).catch((err) => {
-      console.log(err);
     });
   };
 
@@ -120,24 +89,6 @@ function ShowMembership() {
     </Link>
   );
 
-  const deleteMemberButton = (taskId) => (
-    <Button
-      bg="none"
-      m={0}
-      p={0}
-      onClick={() => deleteMembership(taskId)}
-      fontSize={{
-        base: 'lg',
-        sm: '2xl',
-      }}
-      _hover={{
-        textDecor: 'none',
-        color: 'black',
-      }}
-    >
-      <FontAwesomeIcon icon={faTrash} />
-    </Button>
-  );
   return (
     <Layout>
       {(isLoading)
@@ -198,7 +149,13 @@ function ShowMembership() {
                           color="#AFAFAF"
                         >
                           {editMemberButton(member.id)}
-                          {deleteMemberButton(member.id)}
+                          <DeleteMembershipButton
+                            url={`api/memberships/${member.id}`}
+                            taskId={member.id}
+                            data={data}
+                            setData={setData}
+                            updateNav={updateNav}
+                          />
                         </HStack>
                       </Td>
                     </Tr>
@@ -210,7 +167,7 @@ function ShowMembership() {
               <Button bg="#002550" _hover={{ bg: '#013e85' }} onClick={() => setUrlPagination(navigation.prevURL)} disabled={!navigation.prevURL}>
                 <FontAwesomeIcon icon={faArrowLeft} />
               </Button>
-              <Box px={10} py={2} bg="#002550" borderRadius={8} fontWeight="bold"><Text>{navigation.currentPage}</Text></Box>
+              <Box px={10} py={2} bg="#002550" bordadius={8} fontWeight="bold"><Text>{navigation.currentPage}</Text></Box>
               <Button bg="#002550" _hover={{ bg: '#013e85' }} onClick={() => setUrlPagination(navigation.nextURL)} disabled={!navigation.nextURL}>
                 <FontAwesomeIcon icon={faArrowRight} />
               </Button>

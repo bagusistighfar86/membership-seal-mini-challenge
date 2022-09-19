@@ -24,7 +24,7 @@ function Login() {
     password: '',
   });
 
-  const { errors, validateForm, onBlurField } = useLoginFormValidator(form);
+  const { ors, validateForm, onBlurField } = useLoginFormValidator(form);
 
   useEffect(() => {
     const auth = { accessToken: getCookie('accessToken') };
@@ -39,10 +39,10 @@ function Login() {
       [field]: e.target.value,
     };
     setForm(nextFormState);
-    if (errors[field].dirty) {
+    if (ors[field].dirty) {
       validateForm({
         form: nextFormState,
-        errors,
+        ors,
         field,
       });
     }
@@ -66,7 +66,6 @@ function Login() {
       },
     }).then((res) => {
       if (res) {
-        console.log(res);
         setCookie('accessToken', res.data.data.access_token, 30);
         resetFormState();
         navigate('/');
@@ -77,12 +76,11 @@ function Login() {
           isClosable: true,
         });
       }
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
       toast({
         title: 'Failed Login',
         position: 'top',
-        status: 'error',
+        status: 'or',
         isClosable: true,
       });
     });
@@ -90,7 +88,7 @@ function Login() {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    const { isValid } = validateForm({ form, errors, forceTouchErrors: true });
+    const { isValid } = validateForm({ form, ors, forceTouchors: true });
     if (!isValid) return;
     fetchLogin();
   };
@@ -140,11 +138,11 @@ function Login() {
                     onChange={onUpdateField}
                     value={form.email}
                     border="none"
-                    borderRadius={0}
+                    bordadius={0}
                     borderBottom="2px solid black"
                   />
-                  {errors.email.dirty && errors.email.error ? (
-                    <Text color="red">{errors.email.message}</Text>
+                  {ors.email.dirty && ors.email.or ? (
+                    <Text color="red">{ors.email.message}</Text>
                   ) : null}
                 </FormControl>
                 <FormControl mb={10}>
@@ -157,7 +155,7 @@ function Login() {
                       onChange={onUpdateField}
                       onBlur={onBlurField}
                       border="none"
-                      borderRadius={0}
+                      bordadius={0}
                       borderBottom="2px solid black"
                     />
                     <InputRightElement width="4.5rem">
@@ -166,8 +164,8 @@ function Login() {
                       </Button>
                     </InputRightElement>
                   </InputGroup>
-                  {errors.password.dirty && errors.password.error ? (
-                    <Text color="red">{errors.password.message}</Text>
+                  {ors.password.dirty && ors.password.or ? (
+                    <Text color="red">{ors.password.message}</Text>
                   ) : null}
                 </FormControl>
                 <Text mb={10} textAlign="center">

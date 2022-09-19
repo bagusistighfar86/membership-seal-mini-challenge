@@ -29,7 +29,7 @@ function checkCookie(cName) {
     toast({
       title: 'Access token was expired. Please login again.',
       position: 'top',
-      status: 'error',
+      status: 'or',
       isClosable: true,
     });
     return false;
@@ -39,7 +39,6 @@ function checkCookie(cName) {
 
 function deleteCookie(cName) {
   const path = window.location.origin;
-  console.log(path);
 
   document.cookie = `${cName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`;
 }
